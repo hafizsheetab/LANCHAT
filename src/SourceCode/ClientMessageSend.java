@@ -13,7 +13,7 @@ public class ClientMessageSend extends Thread {
     }
 
     @Override
-    public void run() {
+    public synchronized void run() {
         try {
             PrintWriter output = new PrintWriter(socket.getOutputStream(),true);
             System.out.println("Username:");
