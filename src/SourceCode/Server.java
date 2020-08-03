@@ -1,16 +1,16 @@
 package SourceCode;
 
 import java.net.ServerSocket;
-import java.net.Socket;
 
 public class Server {
     public static void main(String[] args){
         try {
-                ServerSocket serverSocket = new ServerSocket(6000);
+                ServerSocket serverSocketMessaging = new ServerSocket(6000);
+                ServerSocket serverSocketBlockChaining = new ServerSocket(5000);
                 while (true){
 
-                    ServerThread serverThread = new ServerThread(serverSocket);
-                    serverThread.start();
+                    MessagingThread messagingThread = new MessagingThread(serverSocketMessaging);
+                    messagingThread.start();
                 }
 
 
