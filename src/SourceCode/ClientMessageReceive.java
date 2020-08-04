@@ -13,7 +13,7 @@ public class ClientMessageReceive extends Thread{
     }
 
     @Override
-    public void run() {
+    public synchronized void run() {
         try {
             BufferedReader input  = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             while (true){

@@ -10,12 +10,15 @@ public class Client {
     public static void main(String[] args) {
 
         try {
-            Socket socket = new Socket("localhost",6000);
-            ClientMessageReceive messageReceive = new ClientMessageReceive(socket);
+            Socket messagingSocket = new Socket("localhost",6000);
+            //Socket blockChainingSocket = new Socket("localhost",5000);
+            ClientMessageReceive messageReceive = new ClientMessageReceive(messagingSocket);
             messageReceive.start();
-            ClientMessageSend messageSend = new ClientMessageSend(socket);
+            ClientMessageSend messageSend = new ClientMessageSend(messagingSocket);
             messageSend.start();
-            System.out.println(messageReceive.isAlive());
+            //BlockChainingThreadClient blockChainingThreadClient = new BlockChainingThreadClient(blockChainingSocket);
+
+            //System.out.println(messageReceive.isAlive());
 
         }
         catch (Exception e){
