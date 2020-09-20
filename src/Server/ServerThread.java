@@ -39,11 +39,12 @@ public class ServerThread extends Thread{
             BufferedReader input = new BufferedReader(new InputStreamReader(socketMessageReceive.getInputStream()));
             String userName = input.readLine();
             this.userName = userName;
-            System.out.println(userName + " connected");
+            //System.out.println(userName + " connected");
             Database.putUserName(userName);
             socketsMessageSend.put(userName,socketMessageSend);
             socketsAuthenticationSend.put(userName,socketAuthenticationSend);
-            System.out.println(isAuthentic());
+            sendAuthentication();
+            //System.out.println(isAuthentic());
             while(true){
                 String toUserName = input.readLine();
                 String message = input.readLine();
@@ -53,9 +54,18 @@ public class ServerThread extends Thread{
                 }
                 else {
                     if(isAuthentic()){
-                        System.out.println("paisi");
-                        Runnable sendMessage = () -> sendMessage(userName,toUserName,message);
-                        new Thread(sendMessage).start();
+                        if(message.equals("exit()")){
+                            //System.out.println(message);
+                            Database.removeUserName(userName);
+                            return;
+
+
+                        }
+                        else{
+                            System.out.println("paisi");
+                            Runnable sendMessage = () -> sendMessage(userName,toUserName,message);
+                            new Thread(sendMessage).start();
+                        }
                     }
                     else {
                         break;
@@ -77,8 +87,8 @@ public class ServerThread extends Thread{
             output.println("go");
             String messageLogClient = input.readLine();
             String messageLogServer = Database.getMessageLog();
-            System.out.println(messageLogClient);
-            System.out.println(messageLogServer);
+            //System.out.println(messageLogClient);
+            //System.out.println(messageLogServer);
             if(messageLogClient.equals(messageLogServer)){
                 //System.out.println("baal");
                 return true;
@@ -94,7 +104,7 @@ public class ServerThread extends Thread{
         try{
             Database.putIntoMessageLog(userName,toUserName,message);
             sendAuthentication();
-            System.out.println(toUserName);
+            //System.out.println(toUserName);
             PrintWriter output = new PrintWriter(socketsMessageSend.get(toUserName).getOutputStream(),true);
             if(fromUserName.equals("Server")){
                 output.println("activeList");

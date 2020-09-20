@@ -1,8 +1,10 @@
 package GUI;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.AnchorPane;
 
 
 import java.io.BufferedReader;
@@ -23,15 +25,25 @@ public class MainWindowController {
     Button sendButton;
     @FXML
     Button activeUsersButton;
+    @FXML
+    AnchorPane anchorPane;
     Socket socketMessageSend;
     Socket socketMessageReceive;
     Socket socketAuthenticationCodeSend;
     Socket socketAuthenticationReceive;
-    String userName;
-    public MainWindowController(String userName) {
-        this.userName = userName;
-        System.out.println(userName);
+
+    public void shutdown() throws InterruptedException {
+        System.out.println("Shesh");
+        sendExitSignal();
+        Thread.sleep(100);
+        Platform.exit();
+        System.exit(0);
     }
+
+    private void sendExitSignal() {
+        ClientMessageSendThread.sendMessage(socketMessageSend,"Server","exit()");
+    }
+
     public void initialize() throws Exception{
         socketMessageSend = new Socket("localhost",6000);
         socketMessageReceive = new Socket("localhost",6001);
@@ -41,9 +53,10 @@ public class MainWindowController {
         ClientAuthenticationCodeReceiveThread clientAuthenticationCodeReceiveThread = new ClientAuthenticationCodeReceiveThread(socketAuthenticationReceive);
         clientAuthenticationCodeSendThread.start();
         clientAuthenticationCodeReceiveThread.start();
-        ClientMessageSendThread.sendUserName(socketMessageSend,userName);
+        ClientMessageSendThread.sendUserName(socketMessageSend, (String) Storage.getObject("userName"));
         Runnable messageReceiveThread = () -> messageReceive();
         new Thread(messageReceiveThread).start();
+
     }
 
     private void messageReceive() {
@@ -66,7 +79,7 @@ public class MainWindowController {
             activeUsersTextArea.setText(message);
         }
         else{
-            receivedMessagesTextArea.setText(message);
+            receivedMessagesTextArea.setText(receivedMessagesTextArea.getText() +"\n"+ message);
         }
     }
     public void sendButtonOnAction() {
@@ -75,4 +88,5 @@ public class MainWindowController {
     public void activeUsersButtonOnAction(){
         ClientMessageSendThread.sendMessage(socketMessageSend,"Server","activeList");
     }
+
 }

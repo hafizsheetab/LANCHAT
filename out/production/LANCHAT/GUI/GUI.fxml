@@ -17,7 +17,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: #4AB19D; -fx-border-color: #344E5C; -fx-border-width: 10;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MainWindowController">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: #4AB19D; -fx-border-color: #344E5C; -fx-border-width: 10;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MainWindowController">
    <children>
       <Text fill="#f8f8f8" layoutX="195.0" layoutY="78.0" stroke="#0d0000" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #ECE9E3;" text="LANCHAT" textAlignment="CENTER">
          <font>

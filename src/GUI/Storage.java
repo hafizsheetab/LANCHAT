@@ -1,5 +1,5 @@
 
-        package Server;
+        package GUI;
 
         import java.io.*;
 

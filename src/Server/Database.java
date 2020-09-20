@@ -2,10 +2,7 @@ package Server;
 
 
 import java.net.Socket;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.HashMap;
 
 public class Database {
@@ -23,6 +20,14 @@ public class Database {
         catch (Exception e){
             e.printStackTrace();
         }
+    }
+    public static void removeUserName(String userName) throws Exception {
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+        Connection connection = DriverManager.getConnection(url,admin,password);
+        Statement statement = connection.createStatement();
+        String sqlQuery = "DELETE FROM USERNAMES WHERE NAME = '" + userName + "'";
+        statement.execute(sqlQuery);
+
     }
     public static String getUserNames(){
         String userNames = "";
