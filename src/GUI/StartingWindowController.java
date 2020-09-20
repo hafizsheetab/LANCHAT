@@ -4,8 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
-
-import java.io.IOException;
+import javafx.stage.Stage;
 
 
 public class StartingWindowController{
@@ -21,7 +20,10 @@ public class StartingWindowController{
 
     public void submitButtonOnAction() throws Exception {
         this.userName = textBox.getText();
-        sceneChanger.sceneChange("GUI.fxml",pane,userName);
+        Storage.storeObject(userName,"userName");
+        Stage stage = (Stage)pane.getScene().getWindow();
+        stage.setTitle(userName);
+        sceneChanger.sceneChange("GUI.fxml",pane);
     }
 
 }
